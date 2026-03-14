@@ -9,15 +9,12 @@ Delete Tasks: Remove completed or unwanted tasks from the list with a single cli
 Save and Load: Your tasks are automatically saved in your browser's local storage, so they will persist even if you refresh or close the page.
 
 Technologies Used
+
 HTML5: For the app's structure.
 
 Tailwind CSS: For fast and responsive styling.
 
 JavaScript: For the app's functionality and logic.
 
-How to Use
-Clone or download the repository.
-
-Open the index.html file in your web browser.
-
-Start adding your tasks!
+## 🔗 Live Demo
+**[View the Live Project Here]((https://mamta653.github.io/Todo-app/))**
