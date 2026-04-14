@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo-App</title>
-    <link rel="stylesheet" href="./style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet">
 </head>
-<body class="flex justify-center items-center h-screen bg-gray-100">
-
-  <div class="bg-white p-6 rounded w-80">
-    <h1 class="text-xl font-bold mb-4">Todo App</h1>
-
-    <div class="flex gap-2 mb-4">
-      <input id="input" class="border p-2 flex-grow" placeholder="Enter task">
-      <button id="btn" class="bg-blue-500 text-white px-3">Add</button>
+<body>
+    <div class="container">
+    <h1>To do APP</h1>
+    <div class="input">
+        <input id="input" type="text" placeholder="Enter your task here">
+        <button id="btn">Add Task</button>
     </div>
-
     <ul id="list"></ul>
-  </div>
-
-    <script src = "./script.js"></script>
+</div>
+    <script src = "script.js"></script>
 </body>
 </html>
