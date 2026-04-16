@@ -2,94 +2,114 @@ let input = document.getElementById("input");
 let list = document.getElementById("list");
 let btn = document.getElementById("btn");
 
-
-
 let tasks = [];
-
 const saved = localStorage.getItem("tasks");
 
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 if (saved) {
     tasks = JSON.parse(saved);
 }
-
-render();
-
-    function addTask() {
+  function addTask() {
     if (input.value.trim() !== "") {
 
         const newTask = {
             id: Date.now(),
-            text: input.value,
+            text: input.value.trim(),
             completed: false
         };
         tasks.push(newTask);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+        saveTasks();
         render(); 
 
         input.value = "";
     }
 }
 
-function deleteTask(id) {
+  function deleteTask(id) {
    tasks = tasks.filter(task => task.id !== id);
-   localStorage.setItem("tasks", JSON.stringify(tasks));
+   saveTasks();
    render(); 
 }
       
-function render() {
+  function render() {
     list.innerHTML = "";
 
     tasks.forEach(task => {
         let li = document.createElement("li");
-        li.innerText = task.text;
-
         li.classList.add("task-item");
+
+         let span = document.createElement("span");
+         span.innerText = task.text;
       
-  
-        // double click → complete
-        li.addEventListener("dblclick", function () {
-            task.completed = !task.completed;
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        render(); 
+          // double click → complete
+           span.addEventListener("dblclick", function () {
+           span.contentEditable = true;
+           span.focus();
         });
 
-        if (task.completed) {
-            li.classList.add("completed");
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = task.completed;
+
+         checkbox.addEventListener("change", function () {
+          task.completed = checkbox.checked;
+          saveTasks();
+          render();
+         });
+          
+        // save 
+         span.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                span.contentEditable = false;
+                task.text = span.innerText;
+                saveTasks();
+            }
+        });
+
+        //blur save
+        span.addEventListener("blur", function () {
+        span.contentEditable = false;
+
+        if (span.innerText.trim() === "") {
+        deleteTask(task.id);
+        } else {
+        task.text = span.innerText;
+        saveTasks();
+        render();
         }
+        });
 
-        // delete button
+
+       // delete button
         let delBtn = document.createElement("button");
-        delBtn.innerText = "DEl";
+        delBtn.innerText = "DEL";
 
-         delBtn.classList.add("delete-btn");
+        delBtn.addEventListener("mousedown", function(e) {
+            e.preventDefault();
+        });
 
         delBtn.addEventListener("click", function () {
             deleteTask(task.id);
         });
 
+        li.appendChild(checkbox);
+        li.appendChild(span);
         li.appendChild(delBtn);
         list.appendChild(li);
     });
 }
 
+      render();
 
 
-btn.addEventListener("click", addTask);
 
 
-input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
+     btn.addEventListener("click", addTask);
+     input.addEventListener("keydown", function(event) {
+     if (event.key === "Enter") {
         addTask();
-    }
-});
-
-
-
-
-
-
-
-
-
-   
-  
+     }
+     });

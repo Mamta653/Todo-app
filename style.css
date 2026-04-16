@@ -33,3 +33,17 @@
   margin-left: 10px;
   cursor: pointer;
 }
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-item span {
+  flex: 1;
+}
+
+.delete-btn {
+  margin-left: auto;
+}
