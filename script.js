@@ -47,6 +47,7 @@ if (saved) {
            span.addEventListener("dblclick", function () {
            span.contentEditable = true;
            span.focus();
+<<<<<<< HEAD
         });
 
         let checkbox = document.createElement("input");
@@ -80,6 +81,25 @@ if (saved) {
         saveTasks();
         render();
         }
+=======
+        });
+          
+        // save 
+         span.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                span.contentEditable = false;
+                task.text = span.innerText;
+                saveTasks();
+            }
+        });
+
+        //blur save
+        span.addEventListener("blur", function () {
+        span.contentEditable = false;
+        task.text = span.innerText;
+        saveTasks();
+>>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
         });
 
 
@@ -94,15 +114,28 @@ if (saved) {
         delBtn.addEventListener("click", function () {
             deleteTask(task.id);
         });
+<<<<<<< HEAD
 
         li.appendChild(checkbox);
+=======
+        
+>>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
         li.appendChild(span);
         li.appendChild(delBtn);
         list.appendChild(li);
     });
 }
 
+<<<<<<< HEAD
       render();
+=======
+render();
+
+
+
+
+btn.addEventListener("click", addTask);
+>>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
 
 
 
@@ -111,5 +144,20 @@ if (saved) {
      input.addEventListener("keydown", function(event) {
      if (event.key === "Enter") {
         addTask();
+<<<<<<< HEAD
      }
      });
+=======
+    }
+});
+
+
+
+
+
+
+
+
+   
+  
+>>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
