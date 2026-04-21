@@ -47,3 +47,23 @@
 .delete-btn {
   margin-left: auto;
 }
+
+.badge {
+    padding: 3px 6px;
+    margin: 0 8px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+}
+
+.high {
+    background-color: red;
+}
+
+.medium {
+    background-color: orange;
+}
+
+.low {
+    background-color: green;
+}

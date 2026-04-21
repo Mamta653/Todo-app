@@ -1,6 +1,8 @@
 let input = document.getElementById("input");
 let list = document.getElementById("list");
 let btn = document.getElementById("btn");
+let priorityInput = document.getElementById("priority");
+let dateInput = document.getElementById("dueDate");
 
 let tasks = [];
 const saved = localStorage.getItem("tasks");
@@ -13,17 +15,20 @@ if (saved) {
 }
   function addTask() {
     if (input.value.trim() !== "") {
-
         const newTask = {
             id: Date.now(),
             text: input.value.trim(),
-            completed: false
+            completed: false,
+            priority: priorityInput.value,
+            dueDate: dateInput.value
         };
         tasks.push(newTask);
         saveTasks();
         render(); 
 
         input.value = "";
+        priorityInput.value = "medium";
+        dateInput.value = "";
     }
 }
 
@@ -42,12 +47,28 @@ if (saved) {
 
          let span = document.createElement("span");
          span.innerText = task.text;
+
+         if (task.completed) {
+        span.style.textDecoration = "line-through";
+        span.style.opacity = "0.6";
+        }
+         
+         let badge = document.createElement("span");
+         badge.innerText = task.priority.toUpperCase();
+         badge.classList.add("badge", task.priority);
+         badge.style.margin = "0 8px";
+
+
+        let date = document.createElement("span");
+        date.innerText = task.dueDate ? ` ${task.dueDate}` : "";
+        date.style.marginLeft = "10px";
+
       
           // double click → complete
            span.addEventListener("dblclick", function () {
            span.contentEditable = true;
            span.focus();
-<<<<<<< HEAD
+        
         });
 
         let checkbox = document.createElement("input");
@@ -81,29 +102,10 @@ if (saved) {
         saveTasks();
         render();
         }
-=======
+
         });
           
-        // save 
-         span.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                span.contentEditable = false;
-                task.text = span.innerText;
-                saveTasks();
-            }
-        });
-
-        //blur save
-        span.addEventListener("blur", function () {
-        span.contentEditable = false;
-        task.text = span.innerText;
-        saveTasks();
->>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
-        });
-
-
-       // delete button
+        // delete button
         let delBtn = document.createElement("button");
         delBtn.innerText = "DEL";
 
@@ -114,50 +116,29 @@ if (saved) {
         delBtn.addEventListener("click", function () {
             deleteTask(task.id);
         });
-<<<<<<< HEAD
 
         li.appendChild(checkbox);
-=======
-        
->>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
+        li.appendChild(badge);
         li.appendChild(span);
+        li.appendChild(date);
         li.appendChild(delBtn);
         list.appendChild(li);
     });
 }
 
-<<<<<<< HEAD
-      render();
-=======
-render();
 
 
+     render();
 
-
-btn.addEventListener("click", addTask);
->>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
-
-
-
-
-     btn.addEventListener("click", addTask);
+    btn.addEventListener("click", addTask);
      input.addEventListener("keydown", function(event) {
      if (event.key === "Enter") {
         addTask();
-<<<<<<< HEAD
      }
      });
-=======
-    }
-});
-
-
-
-
 
 
 
 
    
   
->>>>>>> 776c0b4 (feat: implement inline editing with contentEditable and save on blur/enter)
