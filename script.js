@@ -3,6 +3,8 @@ let list = document.getElementById("list");
 let btn = document.getElementById("btn");
 let priorityInput = document.getElementById("priority");
 let dateInput = document.getElementById("dueDate");
+let currentFilter = "all";   // all | active | completed
+let currentSort = "none";    // none | date | priority | name
 
 let tasks = [];
 const saved = localStorage.getItem("tasks");
@@ -37,31 +39,78 @@ if (saved) {
    saveTasks();
    render(); 
 }
+
+
+
+function updateActiveFilterUI() {
+    document.getElementById("allBtn").classList.remove("active-filter");
+    document.getElementById("activeBtn").classList.remove("active-filter");
+    document.getElementById("completedBtn").classList.remove("active-filter");
+
+    if (currentFilter === "all") {
+        document.getElementById("allBtn").classList.add("active-filter");
+    } else if (currentFilter === "active") {
+        document.getElementById("activeBtn").classList.add("active-filter");
+    } else if (currentFilter === "completed") {
+        document.getElementById("completedBtn").classList.add("active-filter");
+    }
+}
+
+
+
       
   function render() {
     list.innerHTML = "";
+    updateActiveFilterUI();
+    let displayTasks = [...tasks]; // copy
+        if (currentFilter === "active") {
+        displayTasks = displayTasks.filter(task => !task.completed);
+        } else if (currentFilter === "completed") {
+        displayTasks = displayTasks.filter(task => task.completed);
+        }
 
-    tasks.forEach(task => {
+        if (currentSort === "name") {
+        displayTasks.sort((a, b) => a.text.localeCompare(b.text));
+        }
+
+        if (currentSort === "date") {
+        displayTasks.sort((a, b) => (a.dueDate || "").localeCompare(b.dueDate || ""));
+        }
+
+
+        if (currentSort === "priority") {
+        const priorityOrder = {
+        high: 1,
+        medium: 2,
+        low: 3
+        };
+
+    displayTasks.sort((a, b) => {
+        return priorityOrder[a.priority] - priorityOrder[b.priority];
+    });
+    }
+
+     displayTasks.forEach(task => {
         let li = document.createElement("li");
         li.classList.add("task-item");
 
          let span = document.createElement("span");
          span.innerText = task.text;
 
-         if (task.completed) {
-        span.style.textDecoration = "line-through";
-        span.style.opacity = "0.6";
+        if (task.completed) {
+        span.classList.add("completed");
         }
-         
          let badge = document.createElement("span");
          badge.innerText = task.priority.toUpperCase();
          badge.classList.add("badge", task.priority);
-         badge.style.margin = "0 8px";
-
 
         let date = document.createElement("span");
-        date.innerText = task.dueDate ? ` ${task.dueDate}` : "";
-        date.style.marginLeft = "10px";
+        date.innerText = task.dueDate ? `📅 ${task.dueDate}` : "";
+        date.classList.add("date");
+
+        if (task.priority === "high") {
+        span.classList.add("priority-high");
+        }
 
       
           // double click → complete
@@ -88,6 +137,7 @@ if (saved) {
                 span.contentEditable = false;
                 task.text = span.innerText;
                 saveTasks();
+                render();
             }
         });
 
@@ -135,7 +185,27 @@ if (saved) {
      if (event.key === "Enter") {
         addTask();
      }
+     
      });
+     document.getElementById("allBtn").addEventListener("click", () => {
+    currentFilter = "all";
+    render();
+    });
+
+    document.getElementById("activeBtn").addEventListener("click", () => {
+        currentFilter = "active";
+        render();
+    });
+
+    document.getElementById("completedBtn").addEventListener("click", () => {
+        currentFilter = "completed";
+        render();
+    });
+
+    document.getElementById("sort").addEventListener("change", (e) => {
+        currentSort = e.target.value;
+        render();
+    });
 
 
 

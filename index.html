@@ -20,6 +20,18 @@
 <input type="date" id="dueDate">
         <button id="btn">Add Task</button>
     </div>
+    <div class="controls">
+  <button id="allBtn">All</button>
+  <button id="activeBtn">Active</button>
+  <button id="completedBtn">Completed</button>
+
+  <select id="sort">
+    <option value="none">None</option>
+    <option value="date">Due Date</option>
+    <option value="priority">Priority</option>
+    <option value="name">Name</option>
+  </select>
+</div>
     <ul id="list"></ul>
 </div>
     <script src = "script.js"></script>

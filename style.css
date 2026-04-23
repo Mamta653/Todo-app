@@ -32,20 +32,15 @@
 .delete-btn {
   margin-left: 10px;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .task-item {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.task-item span {
   flex: 1;
-}
-
-.delete-btn {
-  margin-left: auto;
+  
 }
 
 .badge {
@@ -66,4 +61,19 @@
 
 .low {
     background-color: green;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.date-label { margin-left: 10px; }
+
+.priority-high { font-weight: bold; }
+
+.active-filter {
+    background-color: #555;
+    color: white;
+    font-weight: bold;
 }
